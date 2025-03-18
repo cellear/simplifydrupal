@@ -1,0 +1,159 @@
+/**
+ * If using a CSS pre-processor, tell it to overwrite this file. If not, place
+ * your custom CSS modifications here.
+ */
+
+
+ /* Aug 26 - make logo responsive */
+ .logo img {
+  max-width: 100%;
+}
+
+ /* div {
+  outline: red dotted;
+ } */
+
+ header#navbar {
+  display: flex;
+  justify-content: space-around;
+}
+
+ /**
+ * @file
+ * Subtheme specific CSS.
+ */
+
+ #navbar-top {
+  /* background-color: #055a8e; */
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+.box-date {
+  position: absolute;
+  max-width: 200px;
+  margin: 0;
+  padding: 0.5rem;
+  word-break: break-word;
+  font-size: 1.25rem;
+  background-color: hsl(0deg 35.72% 56.8% / 33%);
+  color: #f2f2f2;
+  translate: -103%;
+  border-radius: 5px;
+  outline: #8b8686 1px solid;
+  font-family: sans-serif;
+  width: 80px;
+  margin-top: .2rem;
+}
+
+.box-caption {
+  position: absolute;
+  max-width: 200px;
+  margin: 0.2rem;
+  padding: 0.5rem;
+  word-break: break-word;
+  font-size: 1.25rem;
+  background-color: rgba(0,0,0,.6);
+  border-radius: 7px;
+  box-shadow: 2px 2px black;
+  font-family: sans-serif;
+  text-shadow: 1px 1px 3px black;
+  color: ivory;
+}
+
+* { box-sizing: border-box;}
+  
+html {
+  font-size: 100%;
+}
+body {
+  padding: 1rem;
+  font-familiy: Verdana, Geneva, sans-serif;
+}
+/* The Container */
+.box-grid {
+  display: -ms-grid;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 1.5rem;
+  justify-items: center;
+  padding: 0;
+}
+
+/* Styles for the caption overlays */
+/* Standard Box: Top Center */
+.box-flex {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  padding: .5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  background-color: #333333;
+  color: #d9d9d9;
+}
+
+/* Box: Center Center */
+.box-flex-center {
+  align-items: center;
+}
+
+/* Box: Bottom Center */
+.box-flex-bottom {
+  align-items: flex-end;
+}
+
+/* Box: Top Right */
+.box-flex-top-right {
+  justify-content: flex-end;
+}
+
+/* Box: Center Left */
+.box-flex-center-left {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Box: Bottom Right */
+.box-flex-bottom-right {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.box-img {
+  transition: -webkit-transform .5s ease-in-out;
+  transition: transform .5s ease-in-out;
+}
+
+.box-img:hover {
+  -webkit-transform: scale(1.07);
+  transform: scale(1.07);
+}
+
+
+
+
+.box-caption:hover {
+  background-color: rgba(0,0,0,.5);
+  color: #e6e6e6;
+  transition: all ease .5s;
+}
+
+/* Styles for multiple caption overlays */
+
+/* align-self: flex-start */
+.align-start {
+  align-self: flex-start;
+}
+
+/* align-self: center */
+.align-center {
+  -ms-grid-row-align: center;
+  align-self: center;
+}
+
+/* align-self: flex-end */
+.align-end {
+  align-self: flex-end;
+}
