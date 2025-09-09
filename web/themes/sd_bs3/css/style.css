@@ -157,3 +157,9 @@ body {
 .align-end {
   align-self: flex-end;
 }
+
+/* Make article images float right with padding */
+article img.img-responsive {
+    padding: 20px;
+    float: right;
+}
