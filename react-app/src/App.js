@@ -4,6 +4,7 @@ import TipDetail from './TipDetail';
 import './App.css';
 
 function App() {
+  console.log('App component rendering');
   const [tips, setTips] = useState([]);
   const [selectedTip, setSelectedTip] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,8 +13,8 @@ function App() {
   useEffect(() => {
     const fetchTips = async () => {
       try {
-        // Get all article nodes from Drupal JSON:API
-        const response = await fetch('/jsonapi/node/article', {
+        // Get all article nodes from Drupal JSON:API with image data included
+        const response = await fetch('/jsonapi/node/article?include=field_image', {
           method: 'GET',
           headers: {
             'Accept': 'application/vnd.api+json',
@@ -27,22 +28,40 @@ function App() {
         }
         
         const data = await response.json();
+        console.log('API Response:', data);
         
         // Transform JSON:API data to our format
-        const transformedTips = data.data.map((node, index) => ({
-          id: node.attributes.drupal_internal__nid,
-          title: node.attributes.title,
-          content: node.attributes.body?.processed || node.attributes.body?.value || '',
-          image: node.relationships.field_image?.data ? 
-            `https://sd-react.ddev.site:8443/sites/default/files/${node.relationships.field_image.data.meta.alt || 'image'}` : null,
-          tags: node.relationships.field_tags?.data ? 
-            node.relationships.field_tags.data.map(tag => tag.meta.drupal_internal__target_id) : []
-        }));
+        const transformedTips = data.data.map((node, index) => {
+          // Find the image file data from the included relationships
+          let imageUrl = null;
+          if (node.relationships.field_image?.data && data.included) {
+            const imageFile = data.included.find(item => 
+              item.type === 'file--file' && 
+              item.id === node.relationships.field_image.data.id
+            );
+            if (imageFile && imageFile.attributes.uri) {
+              // Convert Drupal file URI to imagecache URL
+              const baseUrl = imageFile.attributes.uri.url;
+              // Replace the base path with the imagecache version
+              imageUrl = `https://sd-react.ddev.site:8443${baseUrl.replace('/sites/default/files/', '/sites/default/files/styles/tips_view_250px/public/')}`;
+            }
+          }
+          
+          return {
+            id: node.attributes.drupal_internal__nid,
+            title: node.attributes.title,
+            content: node.attributes.body?.processed || node.attributes.body?.value || '',
+            image: imageUrl,
+            tags: node.relationships.field_tags?.data ? 
+              node.relationships.field_tags.data.map(tag => tag.meta.drupal_internal__target_id) : []
+          };
+        });
         
         setTips(transformedTips);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching tips:', error);
+        console.error('Error details:', error.message, error.stack);
         setLoading(false);
       }
     };
@@ -51,6 +70,7 @@ function App() {
   }, []);
 
   const handleTipSelect = (tipIndex) => {
+    console.log('Tip selected:', tipIndex, tips[tipIndex]);
     setSelectedTip(tips[tipIndex]);
   };
 
