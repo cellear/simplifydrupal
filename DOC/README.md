@@ -107,6 +107,49 @@ Notes:
 - Loading and error states (skeletons, retry UI).
 - Optional client-side routing (so opening a tip can be deep-linked).
 
+## Deploying to Live (Checklist)
+
+The goal is to reproduce the local setup with minimal, safe changes and use Drupal’s built‑in auth (no custom modules).
+
+1) Enable and verify JSON:API
+- Ensure core JSON:API is enabled on the live site.
+- Confirm articles and images are exposed (visit `/jsonapi` to sanity check).
+- Do NOT leave JSON:API wide open; we’ll require authentication from the frontend.
+
+2) Create a dedicated app user
+- Create a user (e.g. “reactapp”) with ONLY the minimal permissions needed to read published content via JSON:API.
+- Keep the password long and unique. Store securely (e.g. a secret manager, not in the repo).
+
+3) Require authentication for JSON:API
+- Ensure anonymous users cannot GET content from JSON:API (block anon as needed, or set JSON:API to require auth per your policy).
+- Our frontend uses Basic Auth for requests.
+
+4) Build and deploy the React app
+- In the React project:
+  - Ensure `package.json` has `"homepage": "/react-app"`.
+  - Build: `npm run build`.
+  - Deploy the `build/` contents under the Drupal web root at `web/react-app/` so it is served at `/react-app`.
+
+5) Configure the frontend to authenticate
+- In `App.js`, requests include Basic Auth headers. For live, replace the local credentials with environment‑driven values:
+  - Option A (simple): build with environment variables (e.g. `REACT_APP_BASICAUTH=base64(user:pass)`), and set:
+    - `Authorization: 'Basic ' + process.env.REACT_APP_BASICAUTH`
+  - Option B (slightly better): serve through a small server‑side proxy that injects credentials; keeps secrets off the client. Optional for this experiment.
+
+6) Image styles
+- Confirm the `tips_view_250px` image style exists and is generating on live.
+- Thumbnails on the grid rely on `styles/tips_view_250px` paths.
+
+7) Sanity checks
+- Visit `/react-app` on live and confirm:
+  - Grid loads (no 404s on static assets).
+  - Only published content appears.
+  - Clicking a card opens the modal with rendered HTML and the image.
+
+Notes
+- We intentionally avoided custom modules; everything uses core + JSON:API and a dedicated app user.
+- If you need to tighten further later: add rate limiting, a WAF, stricter CSP headers, or move credentials to a proxy.
+
 ## Appendix: Commands Used (reference)
 
 Development and build:
