@@ -14,11 +14,12 @@ function App() {
     const fetchTips = async () => {
       try {
         // Get all article nodes from Drupal JSON:API with image data included
-        const response = await fetch('/jsonapi/node/article?include=field_image', {
+        const response = await fetch('/jsonapi/node/article?include=field_image&filter[status]=1', {
           method: 'GET',
           headers: {
             'Accept': 'application/vnd.api+json',
             'Content-Type': 'application/vnd.api+json',
+            'Authorization': 'Basic ' + btoa('reactapp:reactapp123')
           },
           credentials: 'include'
         });
