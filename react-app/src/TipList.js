@@ -5,7 +5,7 @@ function TipList({ tips, onTipSelect }) {
   
   return (
     <div className="tip-list">
-      <h1>Simplify Drupal - Daily Tips</h1>
+      {/* <h1>Simplify Drupal - Daily Tips</h1> */}
       <div className="tips-grid">
         {tips.map((tip, index) => (
           <div 

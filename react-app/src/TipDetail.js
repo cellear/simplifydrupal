@@ -9,9 +9,7 @@ function TipDetail({ tip, onClose }) {
         <button className="close-button" onClick={onClose}>×</button>
         <h2>Tip {tip.id}</h2>
         <h3>{tip.title}</h3>
-        <div className="tip-content">
-          {tip.content}
-        </div>
+        <div className="tip-content" dangerouslySetInnerHTML={{ __html: tip.content }} />
         {tip.image && (
           <div className="tip-image">
             <img src={tip.image} alt={tip.title} />

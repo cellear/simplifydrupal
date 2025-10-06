@@ -84,6 +84,18 @@ function App() {
 
   return (
     <div className="App">
+
+ {/* ADD THIS HEADER */}
+ <div className="site-header">
+      <img
+        className="site-logo"
+        src={`${process.env.PUBLIC_URL}/simplify-logo.png`}
+        alt="Simplify Drupal"
+      />
+    </div>
+    {/* END HEADER */}
+
+
       <TipList tips={tips} onTipSelect={handleTipSelect} />
       {selectedTip && (
         <TipDetail tip={selectedTip} onClose={handleCloseDetail} />
