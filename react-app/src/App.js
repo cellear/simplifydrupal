@@ -41,10 +41,10 @@ function App() {
               item.id === node.relationships.field_image.data.id
             );
             if (imageFile && imageFile.attributes.uri) {
-              // Convert Drupal file URI to imagecache URL
+              // Convert Drupal file URI to imagecache URL using dynamic base URL
               const baseUrl = imageFile.attributes.uri.url;
-              // Replace the base path with the imagecache version
-              imageUrl = `https://sd-react.ddev.site:8443${baseUrl.replace('/sites/default/files/', '/sites/default/files/styles/tips_view_250px/public/')}`;
+              // Use current domain dynamically
+              imageUrl = `${window.location.origin}${baseUrl.replace('/sites/default/files/', '/sites/default/files/styles/tips_view_250px/public/')}`;
             }
           }
           
