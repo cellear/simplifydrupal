@@ -16,6 +16,14 @@ function TipList({ tips, onTipSelect }) {
               onTipSelect(index);
             }}
           >
+            {tip.image && (
+              <img
+                className="tip-thumb"
+                src={tip.image}
+                alt={tip.title}
+                loading="lazy"
+              />
+            )}
             <h3>Tip {index + 1}</h3>
             <p>{tip.title}</p>
             <span className="read-more">Click to read more...</span>

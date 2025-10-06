@@ -61,6 +61,14 @@
   background-color: #f5f5f5;
 }
 
+.tip-thumb {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
 .tip-card h3 {
   margin: 0 0 10px 0;
   color: #333;
